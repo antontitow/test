@@ -27,7 +27,7 @@ public class Request {
     @Pattern(regexp = "^([^\\p{Lower}\\p{Upper}]+)$", message = "Обычная строка, в которую нельзя ввести буквы")
     private String phone;
 
-    @Pattern(regexp = "^(.+@.+)$", message = "Должно содержать @")
+    @Pattern(regexp = ".+@.+", message = "Должно содержать @")
     private String email;
 
     private char[] password;
