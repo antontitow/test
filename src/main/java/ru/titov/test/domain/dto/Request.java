@@ -13,21 +13,21 @@ import javax.validation.constraints.Pattern;
 @Data
 @Builder
 public class Request {
-    @NotNull(message = "Поле обязательно")
-    @Pattern(regexp = "^([^\\d]+)$", message = "Обычная строка, в которую нельзя ввести цифры")
+    @NotNull(message = "Не указана фамилия")
+    @Pattern(regexp = "^([^\\d]+)$", message = "Фамилия не должна содержать цифры")
     private String surename;
 
-    @NotNull(message = "Поле обязательно")
-    @Pattern(regexp = "^([^\\d]+)$", message = "Обычная строка, в которую нельзя ввести цифры")
+    @NotNull(message = "Имя не указано")
+    @Pattern(regexp = "^([^\\d]+)$", message = "Имя не должно содержать цифры")
     private String name;
 
-    @Pattern(regexp = "^([^\\d]+)$", message = "Обычная строка, в которую нельзя ввести цифры")
+    @Pattern(regexp = "^([^\\d]+)$", message = "Отчество не должно содержать цифры")
     private String patronymic;
 
-    @Pattern(regexp = "^([^\\p{Lower}\\p{Upper}]+)$", message = "Обычная строка, в которую нельзя ввести буквы")
+    @Pattern(regexp = "^([^\\p{Lower}\\p{Upper}]+)$", message = "Телефон не должен содержать буквы")
     private String phone;
 
-    @Pattern(regexp = ".+@.+", message = "Должно содержать @")
+    @Pattern(regexp = ".+@.+", message = "Имейл должен содержать @")
     private String email;
 
     private char[] password;
