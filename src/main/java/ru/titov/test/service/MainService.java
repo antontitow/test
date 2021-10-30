@@ -51,7 +51,6 @@ public class MainService {
         }
         Response response = Response.builder().status(status).errors(errorList).build();
         containerRequest.addResult(parseRequest(response));
-        System.out.println(containerRequest.getListResults());
         return new ResponseEntity<Response>(response, HttpStatus.ACCEPTED);
     }
 
