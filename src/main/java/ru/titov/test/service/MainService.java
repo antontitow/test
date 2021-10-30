@@ -64,7 +64,7 @@ public class MainService {
     }
 
     public ResponseEntity<String[]> getLastRequests() {
-        String[] result = containerRequest.getListResults().stream().limit(4).toArray(String[]::new);
+        String[] result = containerRequest.getListResults().subList(containerRequest.getListResults().size()-4,containerRequest.getListResults().size()).stream().toArray(String[]::new);
         return new ResponseEntity<String[]>(result, HttpStatus.ACCEPTED);
     }
 }
