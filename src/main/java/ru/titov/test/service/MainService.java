@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+import ru.titov.test.domain.ContainerRequest;
 import ru.titov.test.domain.dto.Error;
 import ru.titov.test.domain.dto.Request;
 import ru.titov.test.domain.dto.Response;
@@ -21,11 +22,13 @@ import java.util.List;
  */
 @Service
 public class MainService {
-    final RequestValidator requestValidator;
+    private final RequestValidator requestValidator;
+    private ContainerRequest containerRequest;
 
     @Autowired
-    public MainService(RequestValidator requestValidator) {
+    public MainService(RequestValidator requestValidator, ContainerRequest containerRequest) {
         this.requestValidator = requestValidator;
+        this.containerRequest = containerRequest;
     }
 
     /**
@@ -37,7 +40,7 @@ public class MainService {
     public ResponseEntity<Response> validateCredential(Request request, BindingResult bindingResult) {
         String status = "OK";
         requestValidator.validate(request, bindingResult);
-        List<Error> errorList = new ArrayList<>(10);
+        List<Error> errorList = new ArrayList<>();
         List<ObjectError> objectErrorList = bindingResult.getAllErrors();
         if (!objectErrorList.isEmpty()) {
             status = null;
@@ -46,7 +49,22 @@ public class MainService {
                 errorList.add(Error.builder().field(fieldError.getField()).description(fieldError.getDefaultMessage()).build());
             });
         }
+        Response response = Response.builder().status(status).errors(errorList).build();
+        containerRequest.addResult(parseRequest(response));
+        System.out.println(containerRequest.getListResults());
+        return new ResponseEntity<Response>(response, HttpStatus.ACCEPTED);
+    }
 
-        return new ResponseEntity<Response>(Response.builder().status(status).errors(errorList).build(), HttpStatus.ACCEPTED);
+    private final String parseRequest(Response response) {
+        if (response.getStatus() != null) {
+            return "Регистрация успешна";
+        } else {
+            return response.getErrors().stream().map(Error::getDescription).reduce((s1, s2) -> s1 + ", " + s2).orElse("");
+        }
+    }
+
+    public ResponseEntity<String[]> getLastRequests() {
+        String[] result = containerRequest.getListResults().stream().limit(4).toArray(String[]::new);
+        return new ResponseEntity<String[]>(result, HttpStatus.ACCEPTED);
     }
 }

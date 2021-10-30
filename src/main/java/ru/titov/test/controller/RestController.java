@@ -3,6 +3,7 @@ package ru.titov.test.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,7 @@ import java.util.concurrent.ExecutionException;
  * RestController for validation
  */
 @org.springframework.web.bind.annotation.RestController
-@RequestMapping("/")
+@RequestMapping("/test")
 public class RestController {
     MainService mainService;
 
@@ -32,8 +33,14 @@ public class RestController {
      * @param request
      * @return validation credential
      */
-    @PostMapping(consumes = "application/json", produces = "application/json")
+    @PostMapping(value = "/valid", consumes = "application/json", produces = "application/json")
     ResponseEntity<Response> entry(@RequestBody @Valid Request request, BindingResult bindingResult) throws ExecutionException, InterruptedException {
         return mainService.validateCredential(request, bindingResult);
     }
+
+    @GetMapping(value = "/list")
+    ResponseEntity<String[]> getLastRequests() {
+        return mainService.getLastRequests();
+    }
+
 }
