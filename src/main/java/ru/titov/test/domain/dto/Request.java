@@ -24,10 +24,10 @@ public class Request {
     @Pattern(regexp = "^([^\\d]+)$", message = "Отчество не должно содержать цифры")
     private String patronymic;
 
-    @Pattern(regexp = "^([^\\p{Lower}\\p{Upper}]+)$", message = "Телефон не должен содержать буквы")
+    @Pattern(regexp = "[^([^\\p{Lower}\\p{Upper}]+)$]?", message = "Телефон не должен содержать буквы")
     private String phone;
 
-    @Pattern(regexp = ".+@.+", message = "Имейл должен содержать @")
+    @Pattern(regexp = "[.+@.+]?", message = "Имейл должен содержать @")
     private String email;
 
     private char[] password;
