@@ -3,6 +3,7 @@ package ru.titov.test.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.titov.test.domain.dto.Request;
 import ru.titov.test.domain.dto.Response;
@@ -18,6 +19,7 @@ import java.util.concurrent.ExecutionException;
 @org.springframework.web.bind.annotation.RestController
 @RequestMapping("/test")
 @CrossOrigin(origins = "http://localhost:3000")
+@Validated
 public class RestController {
     MainService mainService;
 

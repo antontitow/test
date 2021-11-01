@@ -14,7 +14,7 @@ import java.util.List;
 @Configuration
 public class ConatainerConfig {
     @Bean
-    @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
+//    @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
     ContainerRequest getContainer() {
         ContainerRequest containerRequest = new ContainerRequest();
         List<String> listResults = new LinkedList<>();
